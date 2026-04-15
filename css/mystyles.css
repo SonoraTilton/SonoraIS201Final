@@ -1,0 +1,26 @@
+body {
+    background-color:antiquewhite;
+}
+
+.header{
+    background-color:rgb(238, 215, 184);
+    color:sienna
+}
+
+.common{
+    text-align: center;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+ul{
+    list-style-position: inside;
+}
+
+ol{
+    list-style-position: inside;
+}
+
+#viz1776280045742 {
+    display: block;
+    margin: 0 auto;
+}

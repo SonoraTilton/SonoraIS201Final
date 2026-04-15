@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASH - Your Future Awaits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #e63946;
+            --yellow: #ffd166;
+            --blue: #118ab2;
+            --green: #06d6a0;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --purple: #9b5de5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--dark);
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(230,57,70,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(17,138,178,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(155,93,229,0.1) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.2; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.5); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header */
+        .title-block {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mash-letters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .mash-letter {
+            font-family: 'Fredoka One', cursive;
+            font-size: 72px;
+            line-height: 1;
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+            animation: letterBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .mash-letter:nth-child(1) { color: var(--red); animation-delay: 0.1s; }
+        .mash-letter:nth-child(2) { color: var(--yellow); animation-delay: 0.2s; }
+        .mash-letter:nth-child(3) { color: var(--green); animation-delay: 0.3s; }
+        .mash-letter:nth-child(4) { color: var(--blue); animation-delay: 0.4s; }
+
+        @keyframes letterBounce {
+            from { opacity: 0; transform: translateY(-30px) scale(0.5); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Cards grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+            animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; border-color: rgba(230,57,70,0.4); }
+        .category-card:nth-child(2) { animation-delay: 0.2s; border-color: rgba(255,209,102,0.4); }
+        .category-card:nth-child(3) { animation-delay: 0.3s; border-color: rgba(6,214,160,0.4); }
+        .category-card:nth-child(4) { animation-delay: 0.4s; border-color: rgba(17,138,178,0.4); }
+        .category-card:nth-child(5) { animation-delay: 0.5s; border-color: rgba(155,93,229,0.4); }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .card-icon { font-size: 24px; }
+
+        .card-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 20px;
+            color: white;
+        }
+
+        .card-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .card-item.eliminated {
+            text-decoration: line-through;
+            opacity: 0.3;
+            background: rgba(255,0,0,0.1);
+            border-color: rgba(255,0,0,0.3);
+        }
+
+        .card-item.winner {
+            background: rgba(6,214,160,0.2);
+            border-color: var(--green);
+            color: var(--green);
+            animation: winnerPulse 1s infinite alternate;
+        }
+
+        @keyframes winnerPulse {
+            from { box-shadow: 0 0 0 0 rgba(6,214,160,0.4); }
+            to { box-shadow: 0 0 0 8px rgba(6,214,160,0); }
+        }
+
+        /* Spiral canvas area */
+        .spiral-section {
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
+        }
+
+        .spiral-title {
+            font-family: 'Fredoka One', cursive;
+            color: white;
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .spiral-subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        #spiralCanvas {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            cursor: crosshair;
+            display: block;
+            margin: 0 auto 16px;
+            border: 2px solid rgba(255,255,255,0.1);
+            touch-action: none;
+        }
+
+        .spiral-counter {
+            font-family: 'Fredoka One', cursive;
+            font-size: 48px;
+            color: var(--yellow);
+            line-height: 1;
+            margin-bottom: 4px;
+            text-shadow: 0 0 20px rgba(255,209,102,0.5);
+            transition: transform 0.1s;
+        }
+
+        .spiral-counter.bump {
+            transform: scale(1.3);
+        }
+
+        .spiral-label {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: 'Fredoka One', cursive;
+            font-size: 18px;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: 1px;
+        }
+
+        .btn:hover { transform: scale(1.05) translateY(-2px); }
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--red), var(--purple));
+            color: white;
+            box-shadow: 0 8px 24px rgba(230,57,70,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-go {
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: white;
+            box-shadow: 0 8px 24px rgba(6,214,160,0.4);
+            font-size: 22px;
+            padding: 16px 48px;
+        }
+
+        /* Results */
+        #resultsSection {
+            display: none;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(6,214,160,0.4);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            animation: cardIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .results-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 36px;
+            color: var(--green);
+            margin-bottom: 8px;
+            text-shadow: 0 0 30px rgba(6,214,160,0.5);
+        }
+
+        .results-subtitle {
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .result-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: left;
+        }
+
+        .result-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-family: 'Fredoka One', cursive;
+            font-size: 20px;
+            color: white;
+        }
+
+        .result-item:nth-child(1) .result-value { color: var(--red); }
+        .result-item:nth-child(2) .result-value { color: var(--yellow); }
+        .result-item:nth-child(3) .result-value { color: var(--green); }
+        .result-item:nth-child(4) .result-value { color: var(--blue); }
+        .result-item:nth-child(5) .result-value { color: var(--purple); }
+
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall 3s ease-in forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Phase indicator */
+        .phase-badge {
+            display: inline-block;
+            background: rgba(255,209,102,0.2);
+            border: 1px solid var(--yellow);
+            color: var(--yellow);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            .mash-letter { font-size: 52px; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .result-items { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+    <div class="title-block">
+        <div class="mash-letters">
+            <span class="mash-letter">M</span>
+            <span class="mash-letter">A</span>
+            <span class="mash-letter">S</span>
+            <span class="mash-letter">H</span>
+        </div>
+        <p class="subtitle">✨ Your destiny awaits ✨</p>
+    </div>
+
+    <div class="phase-badge" id="phaseBadge">Step 1: Draw your spiral!</div>
+
+    <!-- Categories -->
+    <div class="categories-grid" id="categoriesGrid">
+        <div class="category-card" id="card-home">
+            <div class="card-header">
+                <span class="card-icon">🏠</span>
+                <span class="card-title">Home</span>
+            </div>
+            <div class="card-items">
+                <div class="card-item" data-cat="home" data-idx="0">Mansion</div>
+                <div class="card-item" data-cat="home" data-idx="1">Apartment</div>
+                <div class="card-item" data-cat="home" data-idx="2">Shack</div>
+                <div class="card-item" data-cat="home" data-idx="3">House</div>
+            </div>
+        </div>
+        <div class="category-card" id="card-husband">
+            <div class="card-header">
+                <span class="card-icon">🚗</span>
+                <span class="card-title">Husband</span>
+            </div>
+            <div class="card-items">
+                <div class="card-item" data-cat="husband" data-idx="0">Lightning McQueen</div>
+                <div class="card-item" data-cat="husband" data-idx="1">Tow Mater</div>
+                <div class="card-item" data-cat="husband" data-idx="2">Finn McMissile</div>
+                <div class="card-item" data-cat="husband" data-idx="3">Doc Hudson</div>
+            </div>
+        </div>
+        <div class="category-card" id="card-job">
+            <div class="card-header">
+                <span class="card-icon">💼</span>
+                <span class="card-title">Job</span>
+            </div>
+            <div class="card-items">
+                <div class="card-item" data-cat="job" data-idx="0">Architect</div>
+                <div class="card-item" data-cat="job" data-idx="1">IT Specialist</div>
+                <div class="card-item" data-cat="job" data-idx="2">Cow Wrangler</div>
+                <div class="card-item" data-cat="job" data-idx="3">McDonald's Night Shift</div>
+            </div>
+        </div>
+        <div class="category-card" id="card-kids">
+            <div class="card-header">
+                <span class="card-icon">👶</span>
+                <span class="card-title"># of Kids</span>
+            </div>
+            <div class="card-items">
+                <div class="card-item" data-cat="kids" data-idx="0">2</div>
+                <div class="card-item" data-cat="kids" data-idx="1">0</div>
+                <div class="card-item" data-cat="kids" data-idx="2">13</div>
+                <div class="card-item" data-cat="kids" data-idx="3">4</div>
+            </div>
+        </div>
+        <div class="category-card" id="card-pet" style="grid-column: 1 / -1;">
+            <div class="card-header">
+                <span class="card-icon">🐾</span>
+                <span class="card-title">Pet</span>
+            </div>
+            <div class="card-items" style="display: grid; grid-template-columns: repeat(4,1fr); gap: 6px;">
+                <div class="card-item" data-cat="pet" data-idx="0">Turtle</div>
+                <div class="card-item" data-cat="pet" data-idx="1">Dog</div>
+                <div class="card-item" data-cat="pet" data-idx="2">Eye of Sauron</div>
+                <div class="card-item" data-cat="pet" data-idx="3">Edible Goldfish</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spiral Section -->
+    <div class="spiral-section" id="spiralSection">
+        <p class="spiral-title">🌀 Draw a Spiral</p>
+        <p class="spiral-subtitle">Draw loops in the box below — each loop counts as one!</p>
+        <canvas id="spiralCanvas" width="500" height="220"></canvas>
+        <div class="spiral-counter" id="spiralCounter">0</div>
+        <div class="spiral-label">loops drawn</div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="resetSpiral()">↺ Reset</button>
+            <button class="btn btn-go" id="goBtn" onclick="startElimination()" disabled>✨ Reveal My Fate!</button>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div id="resultsSection">
+        <div class="results-title">🎉 Your Future!</div>
+        <div class="results-subtitle">The stars have spoken...</div>
+        <div class="result-items" id="resultItems"></div>
+        <button class="btn btn-secondary" onclick="resetGame()">🔄 Play Again</button>
+    </div>
+</div>
+
+<script>
+    // Stars
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.animationDelay = Math.random() * 3 + 's';
+        s.style.animationDuration = (2 + Math.random() * 3) + 's';
+        starsEl.appendChild(s);
+    }
+
+    // Game data
+    const categories = {
+        home: ['Mansion', 'Apartment', 'Shack', 'House'],
+        husband: ['Lightning McQueen', 'Tow Mater', 'Finn McMissile', 'Doc Hudson'],
+        job: ['Architect', 'IT Specialist', 'Cow Wrangler', "McDonald's Night Shift"],
+        kids: ['2', '0', '13', '4'],
+        pet: ['Turtle', 'Dog', 'Eye of Sauron', 'Edible Goldfish']
+    };
+
+    const categoryLabels = {
+        home: '🏠 Home',
+        husband: '🚗 Husband',
+        job: '💼 Job',
+        kids: '👶 # of Kids',
+        pet: '🐾 Pet'
+    };
+
+    // Spiral drawing
+    const canvas = document.getElementById('spiralCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let lastX = 0, lastY = 0;
+    let loopCount = 0;
+    let pathPoints = [];
+    let directionChanges = 0;
+    let lastAngle = null;
+    let centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+
+    ctx.strokeStyle = 'rgba(255, 209, 102, 0.8)';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        if (e.touches) {
+            return {
+                x: (e.touches[0].clientX - rect.left) * scaleX,
+                y: (e.touches[0].clientY - rect.top) * scaleY
+            };
+        }
+        return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+        };
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mouseleave', stopDraw);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); startDraw(e); });
+    canvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e); });
+    canvas.addEventListener('touchend', stopDraw);
+
+    function startDraw(e) {
+        isDrawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        pathPoints = [{x: lastX, y: lastY}];
+        centerX = lastX;
+        centerY = lastY;
+    }
+
+    let totalAngle = 0;
+    let lastAngleVal = null;
+
+    function draw(e) {
+        if (!isDrawing) return;
+        const pos = getPos(e);
+        
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+
+        // Track loops by measuring angle around center
+        const dx = pos.x - centerX;
+        const dy = pos.y - centerY;
+        const angle = Math.atan2(dy, dx);
+
+        if (lastAngleVal !== null) {
+            let delta = angle - lastAngleVal;
+            if (delta > Math.PI) delta -= 2 * Math.PI;
+            if (delta < -Math.PI) delta += 2 * Math.PI;
+            totalAngle += delta;
+
+            const newLoops = Math.abs(Math.floor(totalAngle / (2 * Math.PI)));
+            if (newLoops !== loopCount) {
+                loopCount = newLoops;
+                updateCounter();
+            }
+        }
+        lastAngleVal = angle;
+        lastX = pos.x;
+        lastY = pos.y;
+    }
+
+    function stopDraw() {
+        isDrawing = false;
+        lastAngleVal = null;
+        ctx.beginPath();
+    }
+
+    function updateCounter() {
+        const counter = document.getElementById('spiralCounter');
+        counter.textContent = loopCount;
+        counter.classList.add('bump');
+        setTimeout(() => counter.classList.remove('bump'), 150);
+        
+        if (loopCount > 0) {
+            document.getElementById('goBtn').disabled = false;
+        }
+    }
+
+    function resetSpiral() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        loopCount = 0;
+        totalAngle = 0;
+        lastAngleVal = null;
+        document.getElementById('spiralCounter').textContent = '0';
+        document.getElementById('goBtn').disabled = true;
+        // Reset card items
+        document.querySelectorAll('.card-item').forEach(el => {
+            el.classList.remove('eliminated', 'winner');
+        });
+        document.getElementById('phaseBadge').textContent = 'Step 1: Draw your spiral!';
+    }
+
+    function resetGame() {
+        resetSpiral();
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('spiralSection').style.display = 'block';
+        document.getElementById('categoriesGrid').style.display = 'grid';
+        document.getElementById('phaseBadge').textContent = 'Step 1: Draw your spiral!';
+    }
+
+    // MASH elimination logic
+    function startElimination() {
+        if (loopCount < 1) return;
+        const magic = loopCount;
+        document.getElementById('phaseBadge').textContent = `Magic number: ${magic} — eliminating...`;
+
+        // Build flat list of all items
+        let allItems = [];
+        Object.keys(categories).forEach(cat => {
+            categories[cat].forEach((item, idx) => {
+                allItems.push({ cat, idx, item });
+            });
+        });
+
+        let remaining = [...allItems];
+        let counter = 0;
+        let eliminated = [];
+
+        // Keep eliminating until one per category remains
+        function step() {
+            if (remaining.length === 0) return;
+
+            // Check if each category has exactly 1 remaining
+            const remainingByCat = {};
+            remaining.forEach(it => {
+                if (!remainingByCat[it.cat]) remainingByCat[it.cat] = [];
+                remainingByCat[it.cat].push(it);
+            });
+
+            const done = Object.values(remainingByCat).every(arr => arr.length === 1);
+            if (done) {
+                showResults(remaining);
+                return;
+            }
+
+            // Count magic number steps
+            let steps = 0;
+            let toEliminate = null;
+            let attempts = 0;
+
+            while (!toEliminate && attempts < remaining.length * magic * 2) {
+                for (let i = 0; i < remaining.length; i++) {
+                    // Skip if this cat already has only 1
+                    const catCount = remaining.filter(it => it.cat === remaining[i].cat).length;
+                    if (catCount <= 1) continue;
+                    steps++;
+                    if (steps === magic) {
+                        toEliminate = remaining[i];
+                        break;
+                    }
+                }
+                attempts++;
+            }
+
+            if (!toEliminate) {
+                // Fallback: eliminate first item from largest category
+                const byCat = {};
+                remaining.forEach(it => {
+                    if (!byCat[it.cat]) byCat[it.cat] = [];
+                    byCat[it.cat].push(it);
+                });
+                const largest = Object.entries(byCat).sort((a,b) => b[1].length - a[1].length)[0];
+                toEliminate = largest[1][0];
+            }
+
+            // Mark eliminated
+            const el = document.querySelector(`[data-cat="${toEliminate.cat}"][data-idx="${toEliminate.idx}"]`);
+            if (el) el.classList.add('eliminated');
+
+            remaining = remaining.filter(it => !(it.cat === toEliminate.cat && it.idx === toEliminate.idx));
+
+            setTimeout(step, 200);
+        }
+
+        step();
+    }
+
+    function showResults(winners) {
+        // Mark winners
+        winners.forEach(it => {
+            const el = document.querySelector(`[data-cat="${it.cat}"][data-idx="${it.idx}"]`);
+            if (el) el.classList.add('winner');
+        });
+
+        // Build results
+        const resultItems = document.getElementById('resultItems');
+        resultItems.innerHTML = '';
+        winners.forEach(it => {
+            const div = document.createElement('div');
+            div.className = 'result-item';
+            div.innerHTML = `
+                <div class="result-category">${categoryLabels[it.cat]}</div>
+                <div class="result-value">${it.item}</div>
+            `;
+            resultItems.appendChild(div);
+        });
+
+        document.getElementById('spiralSection').style.display = 'none';
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('phaseBadge').textContent = '🎉 Destiny revealed!';
+
+        // Confetti!
+        launchConfetti();
+    }
+
+    function launchConfetti() {
+        const colors = ['#e63946','#ffd166','#06d6a0','#118ab2','#9b5de5','#ffffff'];
+        for (let i = 0; i < 80; i++) {
+            setTimeout(() => {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.top = '-20px';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+                piece.style.animationDelay = Math.random() * 1 + 's';
+                piece.style.transform = `rotate(${Math.random()*360}deg)`;
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 4000);
+            }, i * 30);
+        }
+    }
+</script>
+</body>
+</html>
